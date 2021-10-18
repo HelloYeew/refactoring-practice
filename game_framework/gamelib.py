@@ -1,6 +1,12 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
+UPDATE_DELAY = 33
+
+HEIGHT = 500
+
+WIDTH = 800
+
 
 class GameCanvasElement():
     """Base class for an element on the game canvas, with attributes:
@@ -84,7 +90,7 @@ class GameApp(ttk.Frame):
     on the canvas, start/stop animation, and running the animation loop.
     """
 
-    def __init__(self, parent, canvas_width=800, canvas_height=500, update_delay=33):
+    def __init__(self, parent, canvas_width=WIDTH, canvas_height=HEIGHT, update_delay=UPDATE_DELAY):
         super().__init__(parent)
         self.parent = parent
 
@@ -122,6 +128,14 @@ class GameApp(ttk.Frame):
 
     def start(self):
         self.after(0, self.animate)
+    
+    def add_element(self, element: GameElement):
+        self.elements.append(element)
+
+    def remove_element(self, element: GameElement):
+        if element in self.elements:
+            self.elements.remove(element)
+            self.canvas.delete(element.canvas_object_id)
 
     def init_game(self):
         pass
